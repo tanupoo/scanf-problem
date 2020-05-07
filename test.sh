@@ -3,7 +3,7 @@
 TIME=/usr/bin/time
 
 # e.g.
-#   cc -DNB_TEST=10 -DUSE_SCANF=1 -DUSE_SIZEOF=1 test.c
+#   cc -DNB_TEST=10 -DEVAL_END=1 -DUSE_SCANF=1 -DUSE_SIZEOF=1 test.c
 #   $TIME ./a.out 16384
 
 shuf() { awk 'BEGIN {srand(); OFMT="%.17f"} {print rand(),$0}' | sort -k1,1n | cut -d' ' -f2-; }
@@ -17,7 +17,7 @@ do
         while read a b
         do
             # compile
-            cc -DNB_TEST=$NB_TEST -DUSE_SCANF=$a -DUSE_SIZEOF=$b test.c
+            cc -DNB_TEST=$NB_TEST -DEVAL_END=1 -DUSE_SCANF=$a -DUSE_SIZEOF=$b test.c
 
             # exec
             result=$($TIME ./a.out 16384 2>&1 >/dev/null)

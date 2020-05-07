@@ -1,5 +1,6 @@
-import matplotlib.pyplot as plt
+import sys
 import re
+import matplotlib.pyplot as plt
 
 color_list = [
         # scanf, sizeof, color
@@ -9,7 +10,7 @@ color_list = [
         ( "1", "0",  "cyan" ),
         ]
 
-def do_plot(nb, data):
+def do_plot(nb, data, base_name):
     # data = {
     #        "avr": { "y":[], "col":[] },
     #        "usr": { "y":[], "col":[] },
@@ -65,7 +66,7 @@ def do_plot(nb, data):
                  bbox=dict(boxstyle="square", fc="cyan", ec="cyan"))
     #
     fig.tight_layout()
-    plt.savefig("result{:02d}.png".format(nb))
+    plt.savefig("{}-{:02d}.png".format(base_name, nb))
     plt.show()
 
 def find_color(a, b):
@@ -74,9 +75,19 @@ def find_color(a, b):
             return x[2]
     raise ValueError("ERROR: invalid type of a (or b)")
 
+#
+# main
+#
+if len(sys.argv) == 1:
+    print("Usage: plot.py (file)")
+    exit(1)
+
+csv_file = sys.argv[1]
+base_name = csv_file.rsplit(".", 1)[0]
+
 re_sep = re.compile("^## NB_TEST=(\d+)")
 base_data = []
-with open("result.csv") as fd:
+with open(csv_file) as fd:
     for line in fd:
         line = line.strip()
         r = re_sep.match(line)
@@ -116,5 +127,5 @@ for z in base_data:
         data["sys"]["y"].append(float(d[4]))
         data["sys"]["col"].append(find_color(d[0], d[1]))
     #
-    do_plot(nb, data)
+    do_plot(nb, data, base_name)
 

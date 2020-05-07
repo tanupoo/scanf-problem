@@ -1,3 +1,7 @@
+/*
+ * trying to figure out the problem in
+ *   https://gist.github.com/kazuho/02c0d512ea9e10c6f45e0d0fad5de091
+ */
 #include <sys/types.h>
 #include <time.h>
 #include <stdint.h>
@@ -40,7 +44,9 @@ int main(int argc, char **argv)
 	    //ptls_fusion_aesgcm_encrypt(&ctx, iv, aad, sizeof(aad), encrypted, text, textlen);
 	}
 
+#if EVAL_END == 0
         X_GETTIME(ts_end);
+#endif
 
 	// このprintfにはバグがあり、sizeof(text)をtextlenに変えると、上掲の速度低下はなくなる
 #if USE_SIZEOF == 1
@@ -51,6 +57,10 @@ int main(int argc, char **argv)
             printf("%02x", encrypted[textlen + i]);
 #endif
         printf("\n");
+
+#if EVAL_END == 1
+        X_GETTIME(ts_end);
+#endif
 
         elapse[cn] = X_DIFF(ts_end, ts_start);
     }
