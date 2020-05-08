@@ -9,7 +9,17 @@
 #   $TIME ./a.out 16384
 TIME="/usr/bin/time -p"
 
-shuf() { awk 'BEGIN {srand(); OFMT="%.17f"} {print rand(),$0}' | sort -k1,1n | cut -d' ' -f2-; }
+patt() {
+    awk '
+    BEGIN {
+        srand();
+        OFMT="%.17f";
+        print(rand()" 0 0");
+        print(rand()" 0 1");
+        print(rand()" 1 0");
+        print(rand()" 1 1");
+    }' | sort -k1,1n | cut -d' ' -f2-;
+}
 
 do_test() {
     if ls result-*.csv >/dev/null 2>&1 ; then
@@ -24,9 +34,8 @@ do_test() {
             echo "## NB_TEST=$nb_test" >> result-${eval_point}-${nb_test}.csv
             for i in `seq 1 10`
             do
-                echo "testing $nb_test - $i ..."
-                echo "0 1\n1 0\n0 0\n1 1" | shuf | \
-                while read a b
+                echo "testing $nb_test - $eval_point - $i ..."
+                patt | while read a b
                 do
                     # compile
                     cc -DNB_TEST=$nb_test -D$eval_point \
@@ -56,5 +65,5 @@ do_plot() {
     done
 }
 
-#do_test
-do_plot
+do_test
+#do_plot
