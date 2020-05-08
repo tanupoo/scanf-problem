@@ -42,7 +42,7 @@ do_test() {
                         -DUSE_SCANF=$a -DUSE_SIZEOF=$b test.c
 
                     # exec
-                    result=$(($TIME ./a.out 16384 2>&1 >/dev/null) | awk '{print}' ORS=" ")
+                    result=`($TIME ./a.out 16384 2>&1 >/dev/null) | awk '{print}' ORS=" "`
 
                     # e.g. 0 1 elapse: 6.440249 real 6.45 user 0.53 sys 1.98
                     echo $a $b $result | awk -v nb_test=$nb_test '{
