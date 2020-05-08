@@ -23,7 +23,7 @@ def do_plot(nb, data, base_name):
                  color=data["avr"]["col"], alpha=0.8)
     ax1.set_xticks([nb])
     ax1.set_xticklabels(["avr"])
-    ax1.set_ylim([3.25, 8.25])
+    #ax1.set_ylim([3.25, 8.25])
     ax1.set_ylabel("average (s)")
     # usr
     ax2 = fig.add_subplot(1,4,2)
@@ -31,7 +31,7 @@ def do_plot(nb, data, base_name):
                  color=data["usr"]["col"], alpha=0.8)
     ax2.set_xticks([nb])
     ax2.set_xticklabels(["usr"])
-    ax2.set_ylim([0.30, 0.70])
+    #ax2.set_ylim([0.30, 0.70])
     ax2.set_ylabel("user (s)")
     # sys
     ax3 = fig.add_subplot(1,4,3)
@@ -39,7 +39,7 @@ def do_plot(nb, data, base_name):
                  color=data["sys"]["col"], alpha=0.8)
     ax3.set_xticks([nb])
     ax3.set_xticklabels(["sys"])
-    ax3.set_ylim([1.20, 2.45])
+    #ax3.set_ylim([1.20, 2.45])
     ax3.set_ylabel("sys (s)")
     # for legend
     ax4 = fig.add_subplot(1,4,4)
