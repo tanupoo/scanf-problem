@@ -23,7 +23,7 @@ def do_plot(nb, data, base_name):
                  color=data["avr"]["col"], alpha=0.8)
     ax1.set_xticks([nb])
     ax1.set_xticklabels(["avr"])
-    ax1.set_ylim([4.5, 7.5])
+    ax1.set_ylim([3.25, 8.25])
     ax1.set_ylabel("average (s)")
     # usr
     ax2 = fig.add_subplot(1,4,2)
@@ -31,7 +31,7 @@ def do_plot(nb, data, base_name):
                  color=data["usr"]["col"], alpha=0.8)
     ax2.set_xticks([nb])
     ax2.set_xticklabels(["usr"])
-    ax2.set_ylim([0.35, 0.65])
+    ax2.set_ylim([0.30, 0.70])
     ax2.set_ylabel("user (s)")
     # sys
     ax3 = fig.add_subplot(1,4,3)
@@ -39,7 +39,7 @@ def do_plot(nb, data, base_name):
                  color=data["sys"]["col"], alpha=0.8)
     ax3.set_xticks([nb])
     ax3.set_xticklabels(["sys"])
-    ax3.set_ylim([1.45, 2.25])
+    ax3.set_ylim([1.20, 2.45])
     ax3.set_ylabel("sys (s)")
     # for legend
     ax4 = fig.add_subplot(1,4,4)
@@ -97,9 +97,8 @@ with open(csv_file) as fd:
             continue
         base_data[-1]["data"].append(line.split(","))
 
-#print(base_data)
-
 for z in base_data:
+    print(z)
     nb = int(z["nb_test"])
     data = {
             "avr": { "y":[], "col":[] },
@@ -117,14 +116,15 @@ for z in base_data:
         data["sys"]["y"].append(d[4])
         data["sys"]["col"].append(find_color(d[0], d[1]))
     """
+    # e.g. 0,0,6.524981,6.52,0.54,2.05
     for d in z["data"]:
         data["avr"]["y"].append(float(d[2]))
         data["avr"]["col"].append(find_color(d[0], d[1]))
     for d in z["data"]:
-        data["usr"]["y"].append(float(d[3]))
+        data["usr"]["y"].append(float(d[4]))
         data["usr"]["col"].append(find_color(d[0], d[1]))
     for d in z["data"]:
-        data["sys"]["y"].append(float(d[4]))
+        data["sys"]["y"].append(float(d[5]))
         data["sys"]["col"].append(find_color(d[0], d[1]))
     #
     do_plot(nb, data, base_name)

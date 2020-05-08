@@ -44,7 +44,7 @@ int main(int argc, char **argv)
 	    //ptls_fusion_aesgcm_encrypt(&ctx, iv, aad, sizeof(aad), encrypted, text, textlen);
 	}
 
-#if EVAL_END == 0
+#ifdef EVAL_MID
         X_GETTIME(ts_end);
 #endif
 
@@ -58,7 +58,7 @@ int main(int argc, char **argv)
 #endif
         printf("\n");
 
-#if EVAL_END == 1
+#ifdef EVAL_END
         X_GETTIME(ts_end);
 #endif
 
